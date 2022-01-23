@@ -60,6 +60,46 @@ class SeqGenerator:
         return circular_primes
 
     @staticmethod
+    def gen_truncatable_primes(primes : List[int], is_include_1_digit : bool = False) -> List[int]:
+        truncatable_primes = []
+
+        for prime in primes:
+            is_left_truncatable = True
+
+            chk_left_num = NumberHandler.truncate(prime, 0)
+            while chk_left_num is not None:
+                if not chk_left_num in primes:
+                    is_left_truncatable = False
+                    break
+                chk_left_num = NumberHandler.truncate(chk_left_num, 0)
+
+            if is_left_truncatable == False:
+                continue
+
+            is_right_truncatable = True
+            chk_right_num = NumberHandler.truncate(prime, -1)
+            while chk_right_num is not None:
+                if not chk_right_num in primes:
+                    is_right_truncatable = False
+                    break
+                chk_right_num = NumberHandler.truncate(chk_right_num, -1)
+            
+            if is_right_truncatable == False:
+                continue
+
+            truncatable_primes.append(prime)
+        
+        if is_include_1_digit == False:
+            truncatable_primes.remove(2)
+            truncatable_primes.remove(3)
+            truncatable_primes.remove(5)
+            truncatable_primes.remove(7)
+
+        return truncatable_primes
+            
+
+
+    @staticmethod
     def gen_n_digit_numbers(n : int) -> Optional[List[int]]:
         """
         n桁の数字の数列
