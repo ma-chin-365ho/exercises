@@ -1,6 +1,7 @@
-from common.algebra import Algebra
+from common.algebra.number import Number
+from common.algebra.seq_generator import SeqGenerator
 
 def main():
-    algebra = Algebra(1000000)
-    circular_primes = algebra.gen_circular_primes()
+    number = Number(max_prime_number=1000000)
+    circular_primes = SeqGenerator.gen_circular_primes(number.primes)
     print(len(circular_primes))
