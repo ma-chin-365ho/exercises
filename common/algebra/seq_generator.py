@@ -1,4 +1,5 @@
 from typing import List, Any, Optional
+import math
 from common.algebra.subs.digit import Digit
 from common.algebra.subs.list_handler import ListHandler
 from common.algebra.subs.number_handler import NumberHandler
@@ -93,3 +94,20 @@ class SeqGenerator:
                         products.append(product)
 
         return products
+
+    @staticmethod
+    def gen_sum_digit_factorials_numbers() -> List[int]:
+        """
+        桁の階乗の和がそれ自身と同じになる数
+        9! * 8 = 2903040 (7桁)
+        9! * 7 = 2540160 (7桁) なので、7桁以上は無い。
+        """
+        nums = []
+
+        for num in range(3, 10 ** 7):
+            digits = Digit.cnv_digits(num)
+            digit_factorials = [math.factorial(digit) for digit in digits]
+            if num == sum(digit_factorials):
+                nums.append(num)
+
+        return nums
