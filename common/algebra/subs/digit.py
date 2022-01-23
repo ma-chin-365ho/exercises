@@ -33,4 +33,7 @@ class Digit:
             else:
                 return False
 
-
+    @staticmethod
+    def cnt_digits(num : int):
+        digits = Digit.cnv_digits(num)
+        return len(digits)

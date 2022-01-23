@@ -1,6 +1,7 @@
 from typing import List, Any, Optional
 from common.algebra.subs.digit import Digit
 from common.algebra.subs.list_handler import ListHandler
+from common.algebra.subs.number_handler import NumberHandler
 
 
 class SeqGenerator:
@@ -55,3 +56,40 @@ class SeqGenerator:
                 circular_primes.append(prime)
                 print(str(prime) + " is circular prime.")
         return circular_primes
+
+    @staticmethod
+    def gen_n_digit_numbers(n : int) -> Optional[List[int]]:
+        """
+        n桁の数字の数列
+        """
+        if n > 0:
+            return list(range(10 ** (n-1), 10 ** n))
+        else:
+            return None
+
+    @staticmethod
+    def gen_pandigital_products(pandigital_from_digit, pandigital_to_digit, d_multiplicand, d_multiplier):
+        """
+        A * B = C がpandigitalになる積の数列
+
+        d_multiplicand, d_multiplier : 桁数
+        """
+        cnt_product_digits = (pandigital_to_digit - pandigital_from_digit + 1) - d_multiplicand - d_multiplier
+        nums_multiplicand = SeqGenerator.gen_n_digit_numbers(d_multiplicand)
+        nums_multiplier = SeqGenerator.gen_n_digit_numbers(d_multiplier)
+
+        products = []
+        for num_multiplicand in nums_multiplicand:
+            for num_multiplier in nums_multiplier:
+                product = num_multiplicand * num_multiplier
+                if Digit.cnt_digits(product) == cnt_product_digits:
+                    num_con = (
+                        product +
+                        (num_multiplier * (10 ** cnt_product_digits)) +
+                        (num_multiplicand * (10 ** (cnt_product_digits + d_multiplier)))
+                    )
+                    if NumberHandler.is_pandigital(num_con, pandigital_from_digit, pandigital_to_digit):
+                        print(str(num_multiplicand) + " * " + str(num_multiplier) + " = " + str(product) + " (" + str(num_con) + ") is pandigital")
+                        products.append(product)
+
+        return products

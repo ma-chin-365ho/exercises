@@ -1,5 +1,6 @@
 from typing import List, Any, Optional
 from common.algebra.subs.file_handler import FileHandler
+from common.algebra.subs.digit import Digit
 from common.algebra.seq_generator import SeqGenerator
 
 class Number:
