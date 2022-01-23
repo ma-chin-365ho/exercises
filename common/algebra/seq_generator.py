@@ -1,4 +1,4 @@
-from typing import List, Any, Optional
+from typing import List, Any, Optional, Tuple
 import math
 from common.algebra.subs.digit import Digit
 from common.algebra.subs.list_handler import ListHandler
@@ -169,4 +169,19 @@ class SeqGenerator:
         
         return nums
 
+    @staticmethod
+    def gen_right_angle_triangles(perimeter : int) -> List[Tuple[int,int,int]]:
+        right_angle_triangles = []
 
+        if perimeter <= 3:
+            return right_angle_triangles
+
+        for len_hypotenuse in range(2, perimeter-1):
+            for len_edge1 in range(1, len_hypotenuse):
+                len_edge2 = perimeter - len_hypotenuse - len_edge1
+                if len_edge2 <=  len_edge1:
+                    len_edge_pythagoras = math.sqrt((len_hypotenuse ** 2) - (len_edge1 ** 2))
+                    if len_edge_pythagoras == len_edge2:
+                        right_angle_triangles.append((len_hypotenuse, len_edge1, len_edge2))
+
+        return list(set(right_angle_triangles))
