@@ -3,6 +3,7 @@ import math
 from common.algebra.subs.digit import Digit
 from common.algebra.subs.list_handler import ListHandler
 from common.algebra.subs.number_handler import NumberHandler
+from common.algebra.subs.str_handler import StrHandler
 
 
 class SeqGenerator:
@@ -111,3 +112,21 @@ class SeqGenerator:
                 nums.append(num)
 
         return nums
+
+    @staticmethod
+    def gen_palindromes(max_number : int, base : int = 10) -> List[int]:
+        nums = []
+
+        for num in range(1, (max_number + 1)):
+            str_num = ""
+            if base == 10:
+                str_num = str(num)
+            elif base == 2:
+                str_num = format(num, 'b')
+
+            if StrHandler.is_palindromic(str_num):
+                nums.append(num)
+        
+        return nums
+
+
