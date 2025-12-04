@@ -1,9 +1,5 @@
 import java.util.*;
 
-// **************************************
-// ACx3 TLEx16
-// **************************************
-
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -11,15 +7,26 @@ public class Main {
 
 		String[] words = { "dreamer", "eraser", "dream", "erase" };
 
-		while (true) {
-			int lenBf = s.length();
+		boolean isHit = false;
+		boolean isNext = true;
+		while (isNext) {
+			isHit = false;
 			for (int i = 0; i < words.length; i++) {
-				s = s.replaceAll(words[i]+"$", "");
+		        if (s.equals(words[i])) {
+		      		System.out.println("YES");
+		      		isHit = true;
+		      		isNext = false;
+		          	break;
+		        }
+			    if (s.length() >= words[i].length() && s.substring(s.length() - words[i].length()).equals(words[i])) {
+					s = s.substring(0, s.length() - words[i].length());
+			  		isHit = true;
+			   	}
 			}
-			int lenAf = s.length();
-			if (lenBf == lenAf) break;
+			if (isHit == false) {
+	    		System.out.println("NO");
+  				break;
+			}
 		}
-		
-		System.out.println(s.length() == 0 ? "YES" : "NO");
 	}
 }
