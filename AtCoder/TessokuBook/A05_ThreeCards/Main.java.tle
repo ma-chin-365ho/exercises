@@ -1,0 +1,26 @@
+import java.util.*;
+
+/**
+ * 3000 4000 で既に遅すぎたのでぼつ。
+ * 
+ * 
+ */
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int maxNum = sc.nextInt();
+        int sum = sc.nextInt();
+
+        int cntPattern = 0;
+        for (int iRed = 1; iRed <= maxNum; iRed++) {
+            for (int iBlue = 1; iBlue <= maxNum; iBlue++) {
+                for (int iWhite = 1; iWhite <= maxNum; iWhite++) {
+                    if (iRed + iBlue + iWhite == sum) {
+                        cntPattern++;
+                    }
+                }
+            }
+        }
+        System.out.println(cntPattern);
+    }
+}
