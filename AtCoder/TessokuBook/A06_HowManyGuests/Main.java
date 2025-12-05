@@ -1,8 +1,7 @@
 import java.util.*;
 
 /*
-  AC x5 TLE x5
-
+  累積和を使用すれば、計算量が抑えられる。
 */
 
 public class Main {
@@ -20,13 +19,24 @@ public class Main {
 			questions.add(new int[] { sc.nextInt(), sc.nextInt() });
 		}
 
-		int sum = 0;
+		ArrayList<Integer> cumulativeSum = new ArrayList<>();
+		cumulativeSum.add(guestCnts.get(0));
+		for (int i = 1; i < cntDays; i++) {
+			cumulativeSum.add(cumulativeSum.get(i - 1) + guestCnts.get(i));
+		}
+
+		// for (int i = 0; i < cumulativeSum.size(); i++) {
+		// System.out.println(cumulativeSum.get(i));
+		// }
+
 		for (int iQ = 0; iQ < cntQuestions; iQ++) {
-			sum = 0;
-			for (int iG = questions.get(iQ)[0] - 1; iG < questions.get(iQ)[1]; iG++) {
-				sum += guestCnts.get(iG);
+			if (questions.get(iQ)[0] == 1) {
+				System.out.println(cumulativeSum.get(questions.get(iQ)[1] - 1));
+
+			} else {
+				System.out.println(cumulativeSum.get(questions.get(iQ)[1] - 1) -
+						cumulativeSum.get((questions.get(iQ)[0] - 1) - 1));
 			}
-			System.out.println(sum);
 		}
 	}
 }

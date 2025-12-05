@@ -1,0 +1,51 @@
+import java.util.*;
+
+/*
+  AC x8 TLE x2
+
+*/
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int cntDays = sc.nextInt();
+		int cntQuestions = sc.nextInt();
+
+		ArrayList<Integer> guestCnts = new ArrayList<>();
+		for (int i = 0; i < cntDays; i++) {
+			guestCnts.add(sc.nextInt());
+		}
+		ArrayList<int[]> questions = new ArrayList<>();
+		for (int i = 0; i < cntQuestions; i++) {
+			questions.add(new int[] { sc.nextInt(), sc.nextInt() });
+		}
+
+		int sumAll = 0;
+		for (int i = 0; i < cntDays; i++) {
+			sumAll += guestCnts.get(i);
+		}
+
+		int sum = 0;
+		int sum_l = 0;
+		int sum_r = 0;
+		for (int iQ = 0; iQ < cntQuestions; iQ++) {
+			sum = 0;
+			if (questions.get(iQ)[1] - questions.get(iQ)[0] <= cntDays / 2) {
+				for (int iG = questions.get(iQ)[0] - 1; iG < questions.get(iQ)[1]; iG++) {
+					sum += guestCnts.get(iG);
+				}
+			} else {
+				sum_l = 0;
+				sum_r = 0;
+				for (int iG = 0; iG < (questions.get(iQ)[0] - 1); iG++) {
+					sum_l += guestCnts.get(iG);
+				}
+				for (int iG = questions.get(iQ)[1]; iG < cntDays; iG++) {
+					sum_r += guestCnts.get(iG);
+				}
+				sum = sumAll - (sum_l + sum_r);
+			}
+			System.out.println(sum);
+		}
+	}
+}
