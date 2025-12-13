@@ -4,6 +4,10 @@ import java.util.*;
   二分探索法を使用して解く問題。
 
   int型の最大値は、2,147,483,647 > 10^9
+
+  ACx15 WAx6
+
+  TODO: WAの理由が分からない。
 */
 
 public class Main {
@@ -30,13 +34,21 @@ public class Main {
 			// System.out.println(endSec);
 			// System.out.println("==============");
 			tmpCntFlyers = getCntFlyers(intervalPrints, cntPrinters, centerSec);
-			if (endSec <= stSec) {
+			if (endSec - stSec == 0) {
 				System.out.println(stSec);
 				break;
-			} else if (tmpCntFlyers >= cntFlyers)
+			} else if (endSec - stSec == 1) {
+				// NOTE:この場合 1 / 2 = 0なので、必ずcenterSec == stSecとなる。
+				if (tmpCntFlyers >= cntFlyers) {
+					System.out.println(stSec);
+				} else {
+					System.out.println(endSec);
+				}
+				break;
+			} else if (tmpCntFlyers > cntFlyers)
 				endSec = centerSec;
 			else
-				stSec = centerSec + 1;
+				stSec = centerSec;
 		}
 	}
 
