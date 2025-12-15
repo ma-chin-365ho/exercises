@@ -1,0 +1,68 @@
+import java.util.*;
+
+/*
+  二分探索法を使用して解く問題。
+
+   	AC × 13
+	WA × 8
+
+  TODO: WAの理由が分からない。
+*/
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int cntNums = sc.nextInt();
+		long diff = sc.nextInt();
+		long[] numsAsc = new long[cntNums];
+		for (int i = 0; i < cntNums; i++) {
+			numsAsc[i] = sc.nextInt();
+		}
+
+		long cntPattern = 0;
+		int stIdx = 0;
+		int edIdx = 0;
+		int cnIdx = 0;
+		long targetNum = 0;
+		// NOTE: 末端はそれ以外の部分で数え上げられているので除外する。
+		for (int i = 0; i < cntNums - 1; i++) {
+			targetNum = numsAsc[i] + diff;
+			stIdx = i + 1;
+			edIdx = cntNums - 1;
+			if (numsAsc[stIdx] > targetNum) {
+				// NOTE: 存在しないため、探索不要。
+			} else {
+				// System.out.println("*****************");
+				// System.out.println(targetNum);
+				// System.out.println(i);
+				// System.out.println(numsAsc[i]);
+				// System.out.println(diff);
+				// for (int tmp = 0; tmp < 10; tmp++) {
+				while (true) {
+					cnIdx = (stIdx + edIdx) / 2;
+					// System.out.println("=====================");
+					// System.out.println(stIdx);
+					// System.out.println(cnIdx);
+					// System.out.println(numsAsc[cnIdx]);
+					// System.out.println(edIdx);
+
+					if (stIdx == edIdx) {
+						if (targetNum == numsAsc[cnIdx] || cnIdx == cntNums - 1) {
+							cntPattern += cnIdx - i;
+							// System.out.println(cnIdx - i);
+						} else {
+							cntPattern += cnIdx - i - 1;
+							// System.out.println(cnIdx - i - 1);
+						}
+						break;
+					} else if (numsAsc[cnIdx] > targetNum)
+						edIdx = cnIdx;
+					else
+						stIdx = cnIdx + 1;
+				}
+			}
+		}
+		System.out.println(cntPattern);
+	}
+
+}
