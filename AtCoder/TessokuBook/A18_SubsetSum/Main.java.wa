@@ -7,8 +7,6 @@ import java.util.*;
 
    	AC × 17
 	WA × 7
-
-	TODO: WAの理由が不明。：(0,0)=trueの初期値が存在しないから？
 	
 */
 
