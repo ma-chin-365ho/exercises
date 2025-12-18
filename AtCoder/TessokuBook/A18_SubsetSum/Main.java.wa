@@ -1,0 +1,53 @@
+import java.util.*;
+
+/*
+  動的計画法(部分問題の解のメモ化)を使用すると高速化できる問題
+
+  → N枚のカード,合計Sとなる方法が存在するかをboolean二次元配列(N,S)でメモ化する。
+
+   	AC × 17
+	WA × 7
+
+	TODO: WAの理由が不明。：(0,0)=trueの初期値が存在しないから？
+	
+*/
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int cntNums = sc.nextInt();
+		int sum = sc.nextInt();
+		int[] nums = new int[cntNums];
+		for (int i = 0; i < cntNums; i++) {
+			nums[i] = sc.nextInt();
+		}
+
+		boolean[][] isOks = new boolean[cntNums][sum];
+
+		// カード1枚目のみの場合、合計Sが作れるかどうか
+		for (int iSum = 0; iSum < sum; iSum++) {
+			isOks[0][iSum] = nums[0] == (iSum + 1) ? true : false;
+		}
+
+		for (int iNum = 1; iNum < cntNums; iNum++) {
+			for (int iSum = 0; iSum < sum; iSum++) {
+				// すでに指定合計値を表現するパターンが存在する場合
+				if (isOks[iNum - 1][iSum]) {
+					isOks[iNum][iSum] = true;
+				} else {
+					// 新たな数が、指定合計値以上の場合
+					if (nums[iNum] >= (iSum + 1)) {
+						isOks[iNum][iSum] = false;
+					} else {
+						if (isOks[iNum - 1][((iSum + 1) - nums[iNum]) - 1]) {
+							isOks[iNum][iSum] = true;
+						}
+					}
+				}
+
+			}
+		}
+		System.out.println(isOks[cntNums - 1][sum - 1] == true ? "Yes" : "No");
+	}
+
+}
